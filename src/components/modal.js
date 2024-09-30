@@ -1,49 +1,31 @@
 // @todo: Открытие и закрытие модального окна 
+const popupsArray = Array.from(document.querySelectorAll('.popup'));
 
 function openPopup(popup) {
- popup.classList.add('popup_is-opened');
- popup.classList.add('popup_is-animated');
+  popup.classList.add('popup_is-opened');
+  document.addEventListener('keydown', handleEscape);
 }
 
 function closePopup(popup) {
- popup.classList.remove('popup_is-opened');
- popup.classList.add('popup_is-animated');
+if (popup) {
+popup.classList.remove('popup_is-opened');
+document.removeEventListener('keydown', handleEscape);
+}
 }
 
-//@todo:  Открытие попапа с картинкой 
-function zoomCard({link, name}) {
- const zoomCardPopup = document.querySelector('.popup_type_image');
- zoomCardPopup.querySelector('.popup__image').src = link;
- zoomCardPopup.querySelector('.popup__image').alt = name;
- openPopup(zoomCardPopup);
-}
-
-// @todo: Редактирование имени и информации о себе 
-function handleFormSubmit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.                                                                                                       
-  const nameValue = nameInput.value;
-  const jobValue = jobInput.value;
-  const userNameElement = document.querySelector('profile__title');
-  const userJobElement = document.querySelector('profile__description');
-  userNameElement.textContent = nameValue;
-  userJobElement.textContent = jobValue;
-  closePopup();
-  formElementEditProfile.reset();
-}
-
-// @todo: Добавление карточки
-function newPlaceFormSubmit(evt) {
-  evt.preventDefault(); 
-  const placeName = cardNameInput.value;
-  const placelink = urlInput.value;
-  const newCard = {
-    name: placeName,
-    link: placelink,
+function handleEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = popupsArray.find(popup => popup.classList.contains('popup_is-opened'));
+    if (openedPopup) {
+      closePopup(openedPopup);
     }
-  const newElement = createCard(newCard, deleteCard, likeCard, zoomCard);
-  placesList.prepend(newElement);
-  closePopup();
-  formElementNewCard.reset();
+  }
 }
 
-export { openPopup, closePopup, zoomCard, handleFormSubmit, newPlaceFormSubmit }
+function handleOverlay(evt) { 
+    if (evt.target === evt.currentTarget) {
+      closePopup(evt.target);
+  }
+}
+
+export { openPopup, closePopup, handleOverlay, popupsArray }

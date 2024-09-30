@@ -5,16 +5,17 @@ function createCard(card, deleteCard, likeCard, zoomCard) {
     const deleteButton = cardElement.querySelector('.card__delete-button');
     const likeButton = cardElement.querySelector('.card__like-button');
     const image = cardElement.querySelector('.card__image');
-    const zoomCardPopup = document.querySelector('.popup_type_image');
-    cardElement.querySelector('.card__image').src = card.link;
-    cardElement.querySelector('.card__image').alt = card.name;
-    cardElement.querySelector('.card__title').textContent = card.name;
+    const cardTitle = cardElement.querySelector('.card__title');
+    image.src = card.link;
+    image.alt = card.name;
+    cardTitle.textContent = card.name;
     deleteButton.addEventListener('click', deleteCard);
     likeButton.addEventListener('click', likeCard);
     image.addEventListener('click', (event) => {
      zoomCard({
-       link: cardElement.querySelector('.card__image').src,
-       name: zoomCardPopup.querySelector('.popup__image').alt
+       link: image.src,
+       name: image.alt,
+       title: cardTitle.textContent
        });
    });
     return cardElement;
