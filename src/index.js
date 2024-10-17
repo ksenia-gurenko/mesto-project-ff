@@ -7,10 +7,7 @@ import {
   handleOverlay,
   popupsArray,
 } from "./components/modal.js";
-import {
-  enableValidation,
-  clearValidation,
-} from "./components/validation.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
 import {
   getInitialCards,
   getInitialData,
@@ -142,7 +139,13 @@ function handleCardFormSubmit(evt) {
   };
   addNewCard(newPlaceData)
     .then((newCard) => {
-      const newElement = createCard(newCard, newCard.owner._id, deleteCard, likeCard, zoomCard);
+      const newElement = createCard(
+        newCard,
+        newCard.owner._id,
+        deleteCard,
+        likeCard,
+        zoomCard
+      );
       placesList.prepend(newElement);
       closePopup(newCardPopup);
     })
