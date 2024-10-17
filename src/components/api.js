@@ -37,7 +37,7 @@ export const getInitialData = () => {
 
 //Редактирование профиля
 // PATCH https://nomoreparties.co/v1/wff-cohort-24/users/me
-export const editingProfile = (userProfileData) => {
+export const editProfile = (userProfileData) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
@@ -51,7 +51,7 @@ export const editingProfile = (userProfileData) => {
 //Добавление новой карточки
 //POST https://nomoreparties.co/v1/wff-cohort-24/cards
 
-export const addingNewCard = (cardData) => {
+export const addNewCard = (cardData) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     headers: config.headers,
@@ -91,7 +91,7 @@ export const deleteCardApi = (cardId) => {
 
 //Обновление аватара пользователя
 //PATCH https://nomoreparties.co/v1/wff-cohort-24/users/me/avatar
-export const editingAvatar = (avatarLink) => {
+export const editAvatar = (avatarLink) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,

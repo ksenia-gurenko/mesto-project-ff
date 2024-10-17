@@ -1,12 +1,3 @@
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
 const isValid = (formElement, inputElement, validationConfig) => {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
@@ -33,6 +24,7 @@ const hideInputError = (formElement, inputElement, validationConfig) => {
   inputElement.classList.remove(validationConfig.inputErrorClass);
   errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = "";
+  inputElement.setCustomValidity("");
 };
 
 const setEventListeners = (formElement, validationConfig) => {
@@ -92,4 +84,4 @@ function clearValidation(formElement, validationConfig) {
   toggleButtonState(inputList, buttonElement, validationConfig);
 }
 
-export { enableValidation, clearValidation, validationConfig };
+export { enableValidation, clearValidation };

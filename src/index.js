@@ -10,15 +10,14 @@ import {
 import {
   enableValidation,
   clearValidation,
-  validationConfig,
 } from "./components/validation.js";
 import {
   getInitialCards,
   getInitialData,
   getUserData,
-  editingProfile,
-  addingNewCard,
-  editingAvatar,
+  editProfile,
+  addNewCard,
+  editAvatar,
 } from "./components/api.js";
 
 // @todo: DOM узлы
@@ -39,6 +38,14 @@ const formElementNewCard = newCardPopup.querySelector(".new-place");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const urlInput = document.querySelector(".popup__input_type_url");
 let userId;
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
 
 const fillProfileInfo = (userData) => {
   profileTitle.textContent = userData.name;
@@ -55,8 +62,8 @@ const renderInitialCards = (initialCards, userId) => {
 };
 
 popupAddButton.addEventListener("click", function () {
-  clearValidation(formElementNewCard, validationConfig);
   formElementNewCard.reset();
+  clearValidation(formElementNewCard, validationConfig);
   openPopup(newCardPopup);
 });
 
@@ -102,12 +109,10 @@ function handleProfileFormSubmit(evt) {
     name: formElementEditProfile.name.value,
     about: formElementEditProfile.description.value,
   };
-  editingProfile(newProfileData)
+  editProfile(newProfileData)
     .then((editedProfile) => {
       fillProfileInfo(editedProfile);
       closePopup(profilePopup);
-      clearValidation(profilePopup, validationConfig);
-      formElementEditProfile.reset();
     })
     .catch((err) => {
       console.log(err);
@@ -135,13 +140,11 @@ function handleCardFormSubmit(evt) {
     name: cardNameInput.value,
     link: urlInput.value,
   };
-  addingNewCard(newPlaceData)
+  addNewCard(newPlaceData)
     .then((newCard) => {
-      const newElement = createCard(newCard, deleteCard, likeCard, zoomCard);
+      const newElement = createCard(newCard, newCard.owner._id, deleteCard, likeCard, zoomCard);
       placesList.prepend(newElement);
       closePopup(newCardPopup);
-      clearValidation(newCardPopup, validationConfig);
-      formElementNewCard.reset();
     })
     .catch((err) => {
       console.log(err);
@@ -161,12 +164,10 @@ formElementNewCard.addEventListener("submit", handleCardFormSubmit);
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, formElementAvatar.querySelector(".popup__button"));
-  editingAvatar(formElementAvatar.link.value)
+  editAvatar(formElementAvatar.link.value)
     .then((updatedAvatar) => {
       fillProfileInfo(updatedAvatar);
       closePopup(avatarPopup);
-      clearValidation(formElementAvatar, validationConfig);
-      formElementAvatar.reset();
     })
     .catch((err) => {
       console.log(err);
@@ -177,30 +178,14 @@ function handleAvatarFormSubmit(evt) {
 }
 
 editAvatarButton.addEventListener("click", (evt) => {
-  clearValidation(formElementAvatar, validationConfig);
   formElementAvatar.reset();
+  clearValidation(formElementAvatar, validationConfig);
   openPopup(avatarPopup);
 });
 
 formElementAvatar.addEventListener("submit", handleAvatarFormSubmit);
 
 enableValidation(validationConfig);
-
-getInitialCards()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-getUserData()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 getInitialData()
   .then((result) => {
