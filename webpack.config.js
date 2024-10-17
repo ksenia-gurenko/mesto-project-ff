@@ -13,6 +13,7 @@ module.exports = {
     publicPath: '',
   },
   mode: 'development',
+ // devtool: 'sourse-map',
   devServer: {
     static: path.resolve(__dirname, './dist'),
     open: true,

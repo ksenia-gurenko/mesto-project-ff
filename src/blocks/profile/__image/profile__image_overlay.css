@@ -1,0 +1,14 @@
+.profile__image_overlay {
+  display: inline-block;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  inline-size: 120px;
+  block-size: 120px;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+  background-image: url(../../../images/Vector.svg);
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-position: center;
+}
